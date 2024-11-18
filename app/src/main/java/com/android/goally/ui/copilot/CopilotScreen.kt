@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.android.goally.R
 import com.android.goally.ui.RightSideDrawer
-import com.android.goally.ui.compose.components.FilterTagComponent
 import kotlinx.coroutines.launch
 
 
