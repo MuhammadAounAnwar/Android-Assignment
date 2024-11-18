@@ -1,4 +1,4 @@
-package com.getgoally.learnerapp.di
+package com.android.goally.di
 
 import com.android.goally.data.network.rest.api.*
 import dagger.Module

@@ -1,6 +1,7 @@
 package com.android.goally.di
 
 import android.content.Context
+import com.android.goally.data.network.rest.AuthInterceptor
 import com.android.goally.data.network.rest.NetworkConnectionInterceptor
 import com.android.goally.util.*
 import com.google.gson.Gson
@@ -41,20 +42,18 @@ object ClientModule {
     @Singleton
     @Provides
     fun provideOkHttpClient(
-        networkConnectionInterceptor: NetworkConnectionInterceptor
+        networkConnectionInterceptor: NetworkConnectionInterceptor,
+        authInterceptor: AuthInterceptor
     ): OkHttpClient {
-        val logging = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
-            override fun log(message: String) {
-                LogUtil.d(message)
-            }
-        })
+        val logging = HttpLoggingInterceptor { message -> LogUtil.d(message) }
         logging.level = HttpLoggingInterceptor.Level.BODY
 
         val dispatcher = Dispatcher()
         dispatcher.maxRequests = 15
 
         return OkHttpClient.Builder().dispatcher(dispatcher)
-            .addInterceptor(networkConnectionInterceptor).addInterceptor(logging)
+            .addInterceptor(networkConnectionInterceptor).addInterceptor(authInterceptor)
+            .addInterceptor(logging)
             .readTimeout(1, TimeUnit.MINUTES).writeTimeout(1, TimeUnit.MINUTES)
             .connectTimeout(1, TimeUnit.MINUTES).build()
     }
@@ -76,4 +75,11 @@ object ClientModule {
             .addConverterFactory(GsonConverterFactory.create(gson))
     }
 
+    @Singleton
+    @Provides
+    fun provideAuthInterceptor(preferenceUtil: PreferenceUtil): AuthInterceptor {
+        return AuthInterceptor(preferenceUtil)
+    }
+
 }
+

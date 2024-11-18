@@ -1,4 +1,4 @@
-package com.getgoally.learnerapp.data.db
+package com.android.goally.data.db
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

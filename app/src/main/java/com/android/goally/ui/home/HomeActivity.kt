@@ -2,12 +2,16 @@ package com.android.goally.ui.home
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import com.android.goally.BaseActivity
 import com.android.goally.R
 import com.android.goally.databinding.ActivityHomeBinding
 import com.android.goally.databinding.ActivitySplashBinding
+import com.android.goally.ui.copilot.CopilotScreen
 import com.android.goally.util.setSafeOnClickListener
 import com.android.goally.util.toast
 import dagger.hilt.android.AndroidEntryPoint
@@ -15,13 +19,21 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeActivity : BaseActivity() {
     private lateinit var binding: ActivityHomeBinding
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupViews()
-        setupObservers()
+       /* setupViews()
+        setupObservers()*/
+
+
+        setContent {
+            CopilotScreen()
+        }
+
     }
 
     private fun setupViews() {
@@ -41,7 +53,7 @@ class HomeActivity : BaseActivity() {
     }
 
 
-    companion object{
+    companion object {
         fun getCallingIntent(context: Context): Intent {
             return Intent(context, HomeActivity::class.java)
         }

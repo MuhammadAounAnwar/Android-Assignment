@@ -4,8 +4,9 @@ object WebServiceConstant {
     const val AUTHORIZATION = "your key goes here"
 
     const val BASE_URL: String = "https://devapi.getgoally.com/"
-    private const val API_VERSION= "v1/api/"
+    private const val API_VERSION = "v1/api/"
 
     const val CHECK_HEALTH = API_VERSION + "health"
     const val GET_TOKEN = API_VERSION + "devices/get-token"
+    const val COPILOT_LIST = API_VERSION + "devices/copilot-list"
 }

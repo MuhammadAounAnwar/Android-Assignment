@@ -1,4 +1,4 @@
-package com.getgoally.learnerapp.di
+package com.android.goally.di
 
 import com.android.goally.data.db.dao.*
 import com.android.goally.data.network.rest.api.GeneralApi
@@ -23,5 +23,19 @@ object RepositoryModule {
             authenticationDao
         )
     }
+
+
+    @Singleton
+    @Provides
+    fun provideCopilotRepo(
+        authenticationApi: GeneralApi,
+        copilotDao: CopilotDao
+    ): CopilotRepo {
+        return CopilotRepo(
+            authenticationApi,
+            copilotDao
+        )
+    }
+
 
 }

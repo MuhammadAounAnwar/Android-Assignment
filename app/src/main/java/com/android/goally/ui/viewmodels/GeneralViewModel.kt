@@ -2,9 +2,9 @@ package com.android.goally.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.android.goally.data.db.entities.token.Authentication
 import com.android.goally.data.repo.GeneralRepo
 import com.android.goally.util.LogUtil
+import com.android.goally.util.PreferenceUtil
 import com.haroldadmin.cnradapter.NetworkResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -12,19 +12,21 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GeneralViewModel @Inject constructor(
-    private val generalRepo: GeneralRepo
+    private val generalRepo: GeneralRepo,
+    private val preferenceUtil: PreferenceUtil
 ) : ViewModel() {
 
     fun checkServerHealth(
         onLoading: (Boolean) -> Unit,
         onError: (String) -> Unit,
-        onSuccess: (String) -> Unit) {
+        onSuccess: (String) -> Unit
+    ) {
         onLoading(true)
         viewModelScope.launch {
             when (val res = generalRepo.checkHealth()) {
                 is NetworkResponse.Success -> {
                     LogUtil.i(res.body.toString())
-                    if(res.body?.status.equals("ok", true)) {
+                    if (res.body?.status.equals("ok", true)) {
                         onSuccess("Server is up")
                     } else {
                         onError("Server is down")
@@ -54,21 +56,27 @@ class GeneralViewModel @Inject constructor(
         }
     }
 
-    fun getTokenFor(userEmail:String,
+    fun getTokenFor(
+        userEmail: String,
         onLoading: (Boolean) -> Unit,
         onError: (String) -> Unit,
-        onSuccess: () -> Unit) {
+        onSuccess: () -> Unit
+    ) {
         onLoading(true)
         viewModelScope.launch {
             when (val res = generalRepo.getToken(userEmail)) {
                 is NetworkResponse.Success -> {
                     LogUtil.i(res.body.toString())
                     res.body?.let {
-                        if(!it.token.isNullOrEmpty() && !it.name.isNullOrEmpty()){
+                        if (!it.token.isNullOrEmpty() && !it.name.isNullOrEmpty()) {
                             //save token here which will be used for further api calls
+                            it.token?.let { token ->
+                                preferenceUtil.saveString("auth_token", token)
+                            }
+
                             onSuccess()
                         }
-                    }?:run {
+                    } ?: run {
                         onError("Something went wrong")
                     }
                     onLoading(false)

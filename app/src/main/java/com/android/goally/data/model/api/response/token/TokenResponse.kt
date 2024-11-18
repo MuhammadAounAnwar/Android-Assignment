@@ -1,4 +1,4 @@
-package com.kinfolk.world.data.model.api.response.culture
+package com.android.goally.data.model.api.response.token
 
 import com.google.gson.annotations.SerializedName
 
