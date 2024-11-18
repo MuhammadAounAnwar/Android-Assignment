@@ -18,6 +18,7 @@ buildscript {
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
         //firebase - crashlytics
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.8.1'
+        classpath "androidx.compose.compiler:compiler:1.4.0"
     }
 }
 

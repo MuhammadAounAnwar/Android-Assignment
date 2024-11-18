@@ -71,6 +71,7 @@ class GeneralViewModel @Inject constructor(
                         if (!it.token.isNullOrEmpty() && !it.name.isNullOrEmpty()) {
                             //save token here which will be used for further api calls
                             it.token?.let { token ->
+                                preferenceUtil.saveString("email", userEmail)
                                 preferenceUtil.saveString("auth_token", token)
                             }
 
@@ -107,4 +108,10 @@ class GeneralViewModel @Inject constructor(
 
     fun getAuthenticationLive() = generalRepo.getAuthenticationLive()
     suspend fun getAuthentication() = generalRepo.getAuthentication()
+
+    fun autoLoginUser() {
+        preferenceUtil.getString("email")?.let {
+            getTokenFor(it, onLoading = {}, onError = {}, onSuccess = {})
+        }
+    }
 }

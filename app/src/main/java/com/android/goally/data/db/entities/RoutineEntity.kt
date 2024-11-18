@@ -66,7 +66,7 @@ data class RoutineEntity(
     @SerializedName("__v") var _v: Int? = null,
     @SerializedName("createdAt") var createdAt: String? = null,
     @SerializedName("updatedAt") var updatedAt: String? = null,
-    @SerializedName("folder") var folder: String? = null,
+    @SerializedName("folder") var folder: String = "",
     @SerializedName("folderId") var folderId: String? = null,
 
 

@@ -90,7 +90,7 @@ fun ScheduleItemText(item: Routines) {
         )
 
         Text(
-            text = item.category,
+            text = item.folder,
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.secondary
         )
@@ -122,7 +122,7 @@ fun ScheduleItemTextForLandscape(item: Routines) {
         )
 
         Text(
-            text = item.category,
+            text = item.folder,
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.secondary
         )

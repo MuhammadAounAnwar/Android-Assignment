@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import com.android.goally.BaseActivity
@@ -12,12 +13,15 @@ import com.android.goally.R
 import com.android.goally.databinding.ActivityHomeBinding
 import com.android.goally.databinding.ActivitySplashBinding
 import com.android.goally.ui.copilot.CopilotScreen
+import com.android.goally.ui.copilot.CopilotViewModel
 import com.android.goally.util.setSafeOnClickListener
 import com.android.goally.util.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeActivity : BaseActivity() {
+
+    private val viewModel: CopilotViewModel by viewModels()
     private lateinit var binding: ActivityHomeBinding
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -26,12 +30,12 @@ class HomeActivity : BaseActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-       /* setupViews()
-        setupObservers()*/
+        /* setupViews()
+         setupObservers()*/
 
 
         setContent {
-            CopilotScreen()
+            CopilotScreen(viewModel)
         }
 
     }
