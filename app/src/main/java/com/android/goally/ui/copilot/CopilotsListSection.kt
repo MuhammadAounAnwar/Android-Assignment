@@ -4,6 +4,7 @@ package com.android.goally.ui.copilot
 import android.content.res.Configuration
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,12 +28,11 @@ import coil.request.ImageRequest
 import com.android.goally.R
 import com.android.goally.data.model.api.response.copilot.Routines
 import com.android.goally.data.model.api.response.copilot.getScheduleType
-import com.android.goally.data.model.api.response.copilot.getScheduledDays
 
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun ScheduleItemRow(item: Routines) {
+fun ScheduleItemRow(item: Routines, onClickListener: (String) -> Unit = {}) {
     val configuration = LocalConfiguration.current
     val isPortrait = configuration.orientation == Configuration.ORIENTATION_PORTRAIT
 
@@ -40,7 +40,8 @@ fun ScheduleItemRow(item: Routines) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(4.dp),
+            .padding(4.dp)
+            .clickable { onClickListener.invoke(item.Id) },
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

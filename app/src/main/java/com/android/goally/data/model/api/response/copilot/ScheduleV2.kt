@@ -58,6 +58,26 @@ fun ScheduleV2.getScheduleType(): String {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
+fun ScheduleV2.getTimeByScheduleType(): List<String> {
+    return when (type) {
+        ScheduleType.REPEATING_YEARLY.toString() -> {
+            listOfNotNull(yearlyRepeatDateValue.formatDate().let { "$it $timeValue" })
+        }
+
+        ScheduleType.REPEATING_WEEKLY.toString() -> {
+            weeklyRepeatValues?.getRepeatValue().orEmpty()
+        }
+
+        ScheduleType.REPEATING_DAILY.toString() -> {
+            dailyRepeatValues?.getRepeatValue().orEmpty()
+        }
+
+        else -> emptyList()
+    }
+}
+
+
 enum class ScheduleType(val value: String) {
     REPEATING_YEARLY("REPEATING_YEARLY"),
     REPEATING_WEEKLY("REPEATING_WEEKLY"),

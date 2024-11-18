@@ -131,4 +131,6 @@ class CopilotViewModel @Inject constructor(
         }
     }
 
+    fun getRoutineById(id: String) = routines.value.first { it.Id == id }
+
 }

@@ -1,29 +1,48 @@
 package com.android.goally.data.model.api.response.copilot
 
+import androidx.room.Ignore
 import com.google.gson.annotations.SerializedName
 
-
 data class Schedule(
+    @SerializedName("Sun") var Sun: String = "",
+    @SerializedName("Mon") var Mon: String = "",
+    @SerializedName("Tue") var Tue: String = "",
+    @SerializedName("Wed") var Wed: String = "",
+    @SerializedName("Thu") var Thu: String = "",
+    @SerializedName("Fri") var Fri: String = "",
+    @SerializedName("Sat") var Sat: String = ""
+) {
+    companion object {
+        private val WEEKEND_DAYS = listOf("Sunday", "Saturday")
+        private val WEEKDAY_DAYS = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+    }
 
-    @SerializedName("Sun") var Sun: String? = null,
-    @SerializedName("Mon") var Mon: String? = null,
-    @SerializedName("Tue") var Tue: String? = null,
-    @SerializedName("Wed") var Wed: String? = null,
-    @SerializedName("Thu") var Thu: String? = null,
-    @SerializedName("Fri") var Fri: String? = null,
-    @SerializedName("Sat") var Sat: String? = null
+    @Ignore
+    private val dayMapping = listOf(
+        "Sunday" to Sun,
+        "Monday" to Mon,
+        "Tuesday" to Tue,
+        "Wednesday" to Wed,
+        "Thursday" to Thu,
+        "Friday" to Fri,
+        "Saturday" to Sat
+    )
 
-)
+    fun getScheduledDays(): String {
+        val availableDays = dayMapping.filter { it.second.isNotEmpty() }.map { it.first }
+        val hasWeekend = availableDays.any { WEEKEND_DAYS.contains(it) }
+        val hasWeekdays = availableDays.any { WEEKDAY_DAYS.contains(it) }
 
-fun Schedule.getScheduledDaysValues(): String {
-    val days = listOf(Sun, Mon, Tue, Wed, Thu, Fri, Sat).filterNotNull()
-    return days.joinToString(", ")
-}
+        return when {
+            hasWeekend && !hasWeekdays -> "Weekend"
+            !hasWeekend && hasWeekdays -> "Weekdays"
+            else -> availableDays.joinToString(", ")
+        }
+    }
 
-fun Schedule.getScheduledDays(): String {
-    val dayNames = listOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
-    val scheduledDays = listOf(Sun, Mon, Tue, Wed, Thu, Fri, Sat)
-
-    return dayNames.filterIndexed { index, _ -> scheduledDays[index] != null }
-        .joinToString(", ")
+    fun getRepeatValue(): List<String> {
+        return dayMapping
+            .filter { it.second.isNotEmpty() }
+            .map { "${it.first} ${it.second}" }
+    }
 }

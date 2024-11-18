@@ -17,11 +17,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.android.goally.R
 import com.android.goally.ui.RightSideDrawer
+import com.android.goally.ui.compose.navigateToRoutineDetail
 import kotlinx.coroutines.launch
 
 
@@ -34,9 +35,8 @@ enum class FilterType {
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
-@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun CopilotScreen(viewModel: CopilotViewModel = hiltViewModel()) {
+fun CopilotScreen(viewModel: CopilotViewModel = hiltViewModel(), navController: NavController? = null) {
 
     val scope = rememberCoroutineScope()
     val scrollState = rememberLazyListState()
@@ -88,7 +88,9 @@ fun CopilotScreen(viewModel: CopilotViewModel = hiltViewModel()) {
 
                 LazyColumn(modifier = Modifier.fillMaxSize(), state = scrollState) {
                     itemsIndexed(routines, key = { _, routine -> routine.Id }) { _, routine ->
-                        ScheduleItemRow(routine)
+                        ScheduleItemRow(routine, onClickListener = {
+                            navController?.navigateToRoutineDetail(routine.Id)
+                        })
                         Divider(modifier = Modifier.padding(horizontal = 16.dp))
                     }
                 }
