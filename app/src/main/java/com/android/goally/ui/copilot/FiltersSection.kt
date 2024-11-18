@@ -21,6 +21,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.android.goally.R
 
+
+data class FilterOption(val leadingIconResId: Int, val text: String, val onClick: () -> Unit)
+
+enum class FilterType {
+    EMPTY,
+    SCHEDULE,
+    FOLDER
+}
+
 @Composable
 fun FiltersSection(filterOptions: List<FilterOption>) {
     Row(
@@ -28,7 +37,7 @@ fun FiltersSection(filterOptions: List<FilterOption>) {
         horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.End)
     ) {
         filterOptions.forEach { filterOption ->
-            FilterOption(
+            FilterOptionItem(
                 leadingIconResId = filterOption.leadingIconResId,
                 text = filterOption.text,
                 onClick = filterOption.onClick
@@ -39,7 +48,7 @@ fun FiltersSection(filterOptions: List<FilterOption>) {
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun FilterOption(
+fun FilterOptionItem(
     leadingIconResId: Int = R.drawable.fo_leading_icon,
     trailingIconResId: Int = R.drawable.fo_trailing_icon,
     text: String = "Heading",

@@ -25,15 +25,6 @@ import com.android.goally.ui.RightSideDrawer
 import com.android.goally.ui.compose.navigateToRoutineDetail
 import kotlinx.coroutines.launch
 
-
-data class FilterOption(val leadingIconResId: Int, val text: String, val onClick: () -> Unit)
-
-enum class FilterType {
-    EMPTY,
-    SCHEDULE,
-    FOLDER
-}
-
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CopilotScreen(viewModel: CopilotViewModel = hiltViewModel(), navController: NavController? = null) {
@@ -50,18 +41,21 @@ fun CopilotScreen(viewModel: CopilotViewModel = hiltViewModel(), navController: 
 
     val filterOptions = listOf(
         FilterOption(R.drawable.fo_leading_icon, "Schedule") {
+            viewModel.setRecentlySelectedFilter(FilterType.SCHEDULE)
             scope.launch {
-                viewModel.setRecentlySelectedFilter(FilterType.SCHEDULE)
                 drawerState.open()
             }
         },
         FilterOption(R.drawable.fo_leading_icon, "Folder") {
+            viewModel.setRecentlySelectedFilter(FilterType.FOLDER)
             scope.launch {
-                viewModel.setRecentlySelectedFilter(FilterType.FOLDER)
                 drawerState.open()
             }
         }
     )
+
+
+//    FiltersSection(filterOptions = filterOptions)
 
     RightSideDrawer(
         heading = recentlySelectedFilter.name,
@@ -76,6 +70,7 @@ fun CopilotScreen(viewModel: CopilotViewModel = hiltViewModel(), navController: 
             Column(
                 modifier = Modifier
                     .fillMaxSize()
+                    .padding(top = 16.dp)
             ) {
                 FiltersSection(filterOptions = filterOptions)
 

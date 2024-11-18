@@ -29,13 +29,8 @@ class HomeActivity : BaseActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        /* setupViews()
-         setupObservers()*/
-
-
         setContent {
-//            AppNavigation()
-            CopilotScreen()
+            AppNavigation()
         }
 
     }
