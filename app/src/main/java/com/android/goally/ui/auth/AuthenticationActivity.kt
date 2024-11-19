@@ -21,7 +21,7 @@ class AuthenticationActivity : BaseActivity() {
 
         setupViews()
         setupObservers()
-//        generalViewModel.autoLoginUser()
+
     }
 
     private fun setupViews() {

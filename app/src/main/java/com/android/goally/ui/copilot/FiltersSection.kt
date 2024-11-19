@@ -87,22 +87,6 @@ fun FilterOptionItem(
 
 @Composable
 fun TagComponent(isInternetConnected: Boolean, isFilterSelected: Boolean, onClick: () -> Unit) {
-    /*Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(end = 16.dp)
-            .clickable { onClick.invoke() },
-        horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.End)
-    ) {
-        Text(text = "Filtered", color = MaterialTheme.colorScheme.error)
-        Icon(
-            imageVector = Icons.Default.Close,
-            contentDescription = "Filter Icon",
-            modifier = Modifier.size(20.dp),
-            tint = MaterialTheme.colorScheme.error
-        )
-    }*/
-
     Row(
         modifier = Modifier.padding(horizontal = 16.dp),
         horizontalArrangement = Arrangement.SpaceBetween
@@ -115,8 +99,6 @@ fun TagComponent(isInternetConnected: Boolean, isFilterSelected: Boolean, onClic
             FilterTagComponent(onClick)
         }
     }
-
-
 }
 
 @Composable

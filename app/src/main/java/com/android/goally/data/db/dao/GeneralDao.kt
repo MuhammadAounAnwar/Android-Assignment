@@ -9,6 +9,11 @@ import com.android.goally.data.db.entities.token.Authentication
 interface GeneralDao {
     @Query("Select * from authentication")
     fun getAuthenticationLive(): LiveData<Authentication?>
+
     @Query("Select * from authentication")
     suspend fun getAuthentication(): Authentication?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAuthentication(authentication: Authentication)
+
 }

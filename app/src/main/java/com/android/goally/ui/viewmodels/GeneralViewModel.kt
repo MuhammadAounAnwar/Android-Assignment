@@ -2,6 +2,7 @@ package com.android.goally.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.android.goally.data.db.entities.token.Authentication
 import com.android.goally.data.repo.GeneralRepo
 import com.android.goally.util.LogUtil
 import com.android.goally.util.PreferenceUtil
@@ -69,10 +70,11 @@ class GeneralViewModel @Inject constructor(
                     LogUtil.i(res.body.toString())
                     res.body?.let {
                         if (!it.token.isNullOrEmpty() && !it.name.isNullOrEmpty()) {
-                            //save token here which will be used for further api calls
                             it.token?.let { token ->
                                 preferenceUtil.saveString("email", userEmail)
                                 preferenceUtil.saveString("auth_token", token)
+
+                                generalRepo.insertAuthentication(Authentication(name = it.name ?: userEmail, token = it.token))
                             }
 
                             onSuccess()
@@ -108,10 +110,9 @@ class GeneralViewModel @Inject constructor(
 
     fun getAuthenticationLive() = generalRepo.getAuthenticationLive()
     suspend fun getAuthentication() = generalRepo.getAuthentication()
+    suspend fun insertAuthentication(authentication: Authentication) = generalRepo.insertAuthentication(authentication)
 
-    fun autoLoginUser() {
-        preferenceUtil.getString("email")?.let {
-            getTokenFor(it, onLoading = {}, onError = {}, onSuccess = {})
-        }
-    }
+    fun isUserLoggedIn() = preferenceUtil.getString("email") != null
+
+
 }

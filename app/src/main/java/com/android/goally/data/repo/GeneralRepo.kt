@@ -1,6 +1,7 @@
 package com.android.goally.data.repo
 
 import com.android.goally.data.db.dao.GeneralDao
+import com.android.goally.data.db.entities.token.Authentication
 import com.android.goally.data.network.rest.api.GeneralApi
 
 
@@ -13,4 +14,6 @@ class GeneralRepo(
 
     fun getAuthenticationLive() = generalDao.getAuthenticationLive()
     suspend fun getAuthentication() = generalDao.getAuthentication()
+    suspend fun insertAuthentication(authentication: Authentication) =
+        generalDao.insertAuthentication(authentication)
 }

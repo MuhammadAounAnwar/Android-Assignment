@@ -74,6 +74,7 @@ fun ScheduleItemImage(imgURL: String?) {
 @Composable
 fun ScheduleItemText(item: Routines) {
     Column(
+        modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Text(
@@ -86,11 +87,11 @@ fun ScheduleItemText(item: Routines) {
         }
 
         Text(
-            text = scheduleText ?: "Not Scheduled", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary
+            text = scheduleText ?: "Not Scheduled", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary
         )
 
         Text(
-            text = item.folder, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary
+            text = item.folder, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary
         )
     }
 }
@@ -100,7 +101,10 @@ fun ScheduleItemText(item: Routines) {
 @Composable
 fun ScheduleItemTextForLandscape(item: Routines) {
     Row(
-        horizontalArrangement = Arrangement.spacedBy(4.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(end = 16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
             text = item.name, style = MaterialTheme.typography.bodyMedium, maxLines = 2
@@ -112,11 +116,11 @@ fun ScheduleItemTextForLandscape(item: Routines) {
         }
 
         Text(
-            text = scheduleText ?: "Not Scheduled", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary
+            text = scheduleText ?: "Not Scheduled", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary
         )
 
         Text(
-            text = item.folder, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary
+            text = item.folder, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary
         )
     }
 }

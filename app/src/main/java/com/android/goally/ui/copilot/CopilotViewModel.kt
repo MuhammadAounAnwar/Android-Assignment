@@ -73,7 +73,9 @@ class CopilotViewModel @Inject constructor(
 
 
     init {
-        getCopilotListFromServer()
+        if (isConnected.value) {
+            getCopilotListFromServer()
+        }
         loadRoutines()
     }
 

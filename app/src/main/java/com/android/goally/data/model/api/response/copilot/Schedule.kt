@@ -36,7 +36,7 @@ data class Schedule(
         return when {
             hasWeekend && !hasWeekdays -> "Weekend"
             !hasWeekend && hasWeekdays -> "Weekdays"
-            else -> availableDays.joinToString(", ")
+            else -> if (availableDays.size == 7) "Daily" else availableDays.joinToString()
         }
     }
 
