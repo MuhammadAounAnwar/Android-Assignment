@@ -24,18 +24,34 @@ data class DailyRepeatValues(
         "Saturday" to Sat
     )
 
-    fun getActiveDays(): String {
-        val activeDays = dayMapping
-            .filter { it.second.isNotEmpty() }
-            .map { it.first.take(3) }
 
-        return if (activeDays.isEmpty()) "No active days" else activeDays.joinToString(", ")
+    fun getActiveDays(): String {
+        val scheduleType = mutableListOf<String>()
+        if (Sun.isNotEmpty()) scheduleType.add("Sun")
+        if (Mon.isNotEmpty()) scheduleType.add("Mon")
+        if (Tue.isNotEmpty()) scheduleType.add("Tue")
+        if (Wed.isNotEmpty()) scheduleType.add("Wed")
+        if (Thu.isNotEmpty()) scheduleType.add("Thu")
+        if (Fri.isNotEmpty()) scheduleType.add("Fri")
+        if (Sat.isNotEmpty()) scheduleType.add("Sat")
+
+        return if (scheduleType.isEmpty()) "N/A" else {
+            if (scheduleType.size == 7) "Daily"
+            else scheduleType.joinToString(", ")
+        }
     }
 
     fun getRepeatValue(): List<String> {
-        return dayMapping
-            .filter { it.second.isNotEmpty() }
-            .map { "${it.first} ${it.second.firstOrNull() ?: ""}".trim() }
+        val scheduleType = mutableListOf<String>()
+        if (Sun.isNotEmpty()) scheduleType.add("Sunday ${Sun[0]}")
+        if (Mon.isNotEmpty()) scheduleType.add("Monday ${Mon[0]}")
+        if (Tue.isNotEmpty()) scheduleType.add("Tuesday ${Tue[0]}")
+        if (Wed.isNotEmpty()) scheduleType.add("Wednesday ${Wed[0]}")
+        if (Thu.isNotEmpty()) scheduleType.add("Thursday ${Thu[0]}")
+        if (Fri.isNotEmpty()) scheduleType.add("Friday ${Fri[0]}")
+        if (Sat.isNotEmpty()) scheduleType.add("Saturday ${Sat[0]}")
+
+        return scheduleType
     }
 }
 

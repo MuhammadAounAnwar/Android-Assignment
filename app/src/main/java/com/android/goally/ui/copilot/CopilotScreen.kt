@@ -46,7 +46,7 @@ fun CopilotScreen(viewModel: CopilotViewModel = hiltViewModel(), navController: 
                 drawerState.open()
             }
         },
-        FilterOption(R.drawable.fo_leading_icon, "Folder") {
+        FilterOption(R.drawable.fo_folder_icon, "Folder") {
             viewModel.setRecentlySelectedFilter(FilterType.FOLDER)
             scope.launch {
                 drawerState.open()
@@ -54,8 +54,6 @@ fun CopilotScreen(viewModel: CopilotViewModel = hiltViewModel(), navController: 
         }
     )
 
-
-//    FiltersSection(filterOptions = filterOptions)
 
     RightSideDrawer(
         heading = recentlySelectedFilter.name,

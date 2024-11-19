@@ -34,7 +34,7 @@ enum class FilterType {
 fun FiltersSection(filterOptions: List<FilterOption>) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.End)
+        horizontalArrangement = Arrangement.spacedBy(2.dp, Alignment.End)
     ) {
         filterOptions.forEach { filterOption ->
             FilterOptionItem(
@@ -65,20 +65,22 @@ fun FilterOptionItem(
         Icon(
             painter = painterResource(id = leadingIconResId),
             contentDescription = null,
-            modifier = Modifier.size(24.dp)
+            modifier = Modifier.size(16.dp)
         )
 
-        Spacer(modifier = Modifier.width(8.dp))
+        Spacer(modifier = Modifier.width(4.dp))
 
         Text(
             text = text,
-            style = MaterialTheme.typography.bodyMedium
+            style = MaterialTheme.typography.bodySmall
         )
+
+        Spacer(modifier = Modifier.width(4.dp))
 
         Icon(
             painter = painterResource(id = trailingIconResId),
             contentDescription = null,
-            modifier = Modifier.size(24.dp)
+            modifier = Modifier.size(16.dp)
         )
     }
 }
@@ -92,7 +94,7 @@ fun FilterTagComponent(onClick: () -> Unit) {
             .clickable { onClick.invoke() },
         horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.End)
     ) {
-        Text(text = "Filtered")
+        Text(text = "Filtered", color = MaterialTheme.colorScheme.error)
         Icon(
             imageVector = Icons.Default.Close,
             contentDescription = "Filter Icon",

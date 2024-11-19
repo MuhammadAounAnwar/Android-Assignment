@@ -36,12 +36,15 @@ fun ScheduleItemRow(item: Routines, onClickListener: (String) -> Unit = {}) {
     val configuration = LocalConfiguration.current
     val isPortrait = configuration.orientation == Configuration.ORIENTATION_PORTRAIT
 
-
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(4.dp)
-            .clickable { onClickListener.invoke(item.Id) },
+            .clickable {
+                if (item.type == "SCHEDULED" && item.activities.isNotEmpty()) {
+                    onClickListener.invoke(item.Id)
+                }
+            },
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -53,10 +56,7 @@ fun ScheduleItemRow(item: Routines, onClickListener: (String) -> Unit = {}) {
 @Composable
 fun ScheduleItemImage(imgURL: String?) {
     AsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(imgURL)
-            .crossfade(true)
-            .build(),
+        model = ImageRequest.Builder(LocalContext.current).data(imgURL).crossfade(true).build(),
         placeholder = painterResource(R.drawable.app_logo),
         contentDescription = imgURL,
         contentScale = ContentScale.Crop,
@@ -74,9 +74,7 @@ fun ScheduleItemText(item: Routines) {
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Text(
-            text = item.name,
-            style = MaterialTheme.typography.bodyMedium,
-            maxLines = 2
+            text = item.name, style = MaterialTheme.typography.bodyMedium, maxLines = 2
         )
 
         val scheduleText = when {
@@ -85,15 +83,11 @@ fun ScheduleItemText(item: Routines) {
         }
 
         Text(
-            text = scheduleText ?: "Not Scheduled",
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.secondary
+            text = scheduleText ?: "Not Scheduled", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary
         )
 
         Text(
-            text = item.folder,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.secondary
+            text = item.folder, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary
         )
     }
 }
@@ -106,9 +100,7 @@ fun ScheduleItemTextForLandscape(item: Routines) {
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Text(
-            text = item.name,
-            style = MaterialTheme.typography.bodyMedium,
-            maxLines = 2
+            text = item.name, style = MaterialTheme.typography.bodyMedium, maxLines = 2
         )
 
         val scheduleText = when {
@@ -117,15 +109,11 @@ fun ScheduleItemTextForLandscape(item: Routines) {
         }
 
         Text(
-            text = scheduleText ?: "Not Scheduled",
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.secondary
+            text = scheduleText ?: "Not Scheduled", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary
         )
 
         Text(
-            text = item.folder,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.secondary
+            text = item.folder, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary
         )
     }
 }

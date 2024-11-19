@@ -5,17 +5,18 @@ import com.google.gson.annotations.SerializedName
 
 
 data class WeeklyRepeatedValues(
-    @SerializedName("Sun") var Sun: String = "",
-    @SerializedName("Mon") var Mon: String = "",
-    @SerializedName("Tue") var Tue: String = "",
-    @SerializedName("Wed") var Wed: String = "",
-    @SerializedName("Thu") var Thu: String = "",
-    @SerializedName("Fri") var Fri: String = "",
-    @SerializedName("Sat") var Sat: String = ""
+    @SerializedName("Sun") var Sun: String? = null,
+    @SerializedName("Mon") var Mon: String? = null,
+    @SerializedName("Tue") var Tue: String? = null,
+    @SerializedName("Wed") var Wed: String? = null,
+    @SerializedName("Thu") var Thu: String? = null,
+    @SerializedName("Fri") var Fri: String? = null,
+    @SerializedName("Sat") var Sat: String? = null
 ) {
     companion object {
         private val WEEKEND_DAYS = listOf("Sunday", "Saturday")
         private val WEEKDAY_DAYS = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+
     }
 
     @Ignore
@@ -30,21 +31,41 @@ data class WeeklyRepeatedValues(
     )
 
     fun getRepeatType(): String {
-        val availableDays = dayMapping.filter { it.second.isNotEmpty() }.map { it.first }
-        val hasWeekend = availableDays.any { WEEKEND_DAYS.contains(it) }
-        val hasWeekdays = availableDays.any { WEEKDAY_DAYS.contains(it) }
+        val weekdays = setOf(Mon, Tue, Wed, Thu, Fri)
+        val weekend = setOf(Sun, Sat)
+
+        val hasWeekend = weekend.any { weekend.contains(it) }
+        val hasWeekdays = weekdays.any { weekdays.contains(it) }
 
         return when {
             hasWeekend && !hasWeekdays -> "Weekend"
             !hasWeekend && hasWeekdays -> "Weekdays"
-            else -> availableDays.joinToString(", ")
+            else -> {
+                val availableDays = mutableListOf<String>()
+                if (Sun != null) availableDays.add("Sun")
+                if (Mon != null) availableDays.add("Mon")
+                if (Tue != null) availableDays.add("Tue")
+                if (Wed != null) availableDays.add("Wed")
+                if (Thu != null) availableDays.add("Thu")
+                if (Fri != null) availableDays.add("Fri")
+                if (Sat != null) availableDays.add("Sat")
+                availableDays.joinToString(", ")
+            }
         }
     }
 
+
     fun getRepeatValue(): List<String> {
-        return dayMapping
-            .filter { it.second.isNotEmpty() }
-            .map { "${it.first} ${it.second}" }
+        val availableDays = mutableListOf<String>()
+        if (Sun != null) availableDays.add("Sunday ${Sun ?: ""}")
+        if (Mon != null) availableDays.add("Monday ${Mon ?: ""}")
+        if (Tue != null) availableDays.add("Tuesday ${Tue ?: ""}")
+        if (Wed != null) availableDays.add("Wednesday ${Wed ?: ""}")
+        if (Thu != null) availableDays.add("Thursday ${Thu ?: ""}")
+        if (Fri != null) availableDays.add("Friday ${Fri ?: ""}")
+        if (Sat != null) availableDays.add("Saturday ${Sat ?: ""}")
+        return availableDays
     }
 }
+
 

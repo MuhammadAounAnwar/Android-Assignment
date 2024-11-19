@@ -102,7 +102,7 @@ data class RoutineEntity(
 
 fun Routines.toEntity(): RoutineEntity {
     return RoutineEntity(
-        Id = this.Id ?: throw IllegalArgumentException("ID cannot be null"),
+        Id = this.Id,
         enableVacationMode = this.enableVacationMode,
         name = this.name,
         rewardType = this.rewardType,
