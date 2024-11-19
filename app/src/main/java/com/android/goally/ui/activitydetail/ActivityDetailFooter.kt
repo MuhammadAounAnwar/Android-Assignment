@@ -104,7 +104,7 @@ fun FooterItemHeading(leadingIconResId: ImageVector, headingText: String) {
                 .size(16.dp)
         )
 
-        Spacer(modifier = Modifier.width(8.dp))
+        Spacer(modifier = Modifier.width(4.dp))
 
         Text(
             text = headingText, style = MaterialTheme.typography.bodySmall.copy(fontSize = 12.sp), color = Color.Black

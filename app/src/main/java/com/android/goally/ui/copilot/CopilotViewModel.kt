@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.android.goally.data.db.entities.toDomainList
 import com.android.goally.data.model.api.response.copilot.Routines
 import com.android.goally.data.repo.CopilotRepo
+import com.android.goally.util.ConnectivityObserver
 import com.android.goally.util.LogUtil
 import com.haroldadmin.cnradapter.NetworkResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,8 +21,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CopilotViewModel @Inject constructor(
-    private val copilotRepo: CopilotRepo
+    private val copilotRepo: CopilotRepo,
+    private val connectivityObserver: ConnectivityObserver
 ) : ViewModel() {
+
+    val isConnected: StateFlow<Boolean> = connectivityObserver.isConnected
 
     private var _routines = MutableStateFlow<List<Routines>>(emptyList())
     val routines: StateFlow<List<Routines>> get() = _routines
@@ -133,4 +137,9 @@ class CopilotViewModel @Inject constructor(
 
     fun getRoutineById(id: String) = routines.value.first { it.Id == id }
 
+
+    override fun onCleared() {
+        super.onCleared()
+        connectivityObserver.stopObserving()
+    }
 }

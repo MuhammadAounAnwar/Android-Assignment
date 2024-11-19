@@ -1,6 +1,9 @@
 package com.android.goally.ui.compose
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.*
